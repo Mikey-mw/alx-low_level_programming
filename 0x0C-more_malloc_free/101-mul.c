@@ -1,9 +1,52 @@
 #include "main.h"
 
 /**
+ * _realloc - reallocates a memory block using malloc and free
+ *
+ * @ptr: pointer to the memory previously allocated
+ * @old_size: is the size, in bytes, of the allocated space for ptr
+ * @new_size: the new size, in bytes of the new memory block
+ *
+ * Return: pointer allocate new size memory, or NULL
+ */
+void *_realloc(void *ptr, unsigned int old_size, unsigned int new_size)
+{
+	char *p;
+	unsigned int i, n = new_size;
+	char *oldp = ptr;
+
+	if (ptr == NULL)
+	{
+		p = malloc(new_size);
+		return (p);
+	}
+	else if (new_size == 0)
+	{
+		free(ptr);
+		return (NULL);
+	}
+	else if (new_size == old_size)
+		return (ptr);
+	p = malloc(new_size);
+	if (p == NULL)
+		return (NULL);
+	if (new_size > old_size)
+		n = old_size;
+	for (i = 0; i < n; i++)
+		p[i] = oldp[i];
+	free(ptr);
+	return (p);
+}
+
+/* 101-mul.c */
+
+#include "main.h"
+
+/**
  * _print - moves a string one place to the left and prints the string
  * @str: string to move
- * @l: size of the string
+ * @l: size of string
+ *
  * Return: void
  */
 void _print(char *str, int l)
@@ -28,9 +71,10 @@ void _print(char *str, int l)
  * mul - multiplies a char with a string and places the answer into dest
  * @n: char to multiply
  * @num: string to multiply
- * @num_index: last non-NULL index of num
+ * @num_index: last non NULL index of num
  * @dest: destination of multiplication
  * @dest_index: highest index to start addition
+ *
  * Return: pointer to dest, or NULL on failure
  */
 char *mul(char n, char *num, int num_index, char *dest, int dest_index)
@@ -62,6 +106,7 @@ char *mul(char n, char *num, int num_index, char *dest, int dest_index)
 /**
  * check_for_digits - checks the arguments to ensure they are digits
  * @av: pointer to arguments
+ *
  * Return: 0 if digits, 1 if not
  */
 int check_for_digits(char **av)
@@ -77,17 +122,19 @@ int check_for_digits(char **av)
 		}
 	}
 	return (0);
-OB}
-OBOB
+}
+
 /**
-OBOBOBOBOB * init - initializes a string
+ * init - initializes a string
  * @str: string to initialize
-OB * @l: length of string
+ * @l: length of string
+ *
  * Return: void
  */
 void init(char *str, int l)
 {
 	int i;
+
 	for (i = 0; i < l; i++)
 		str[i] = '0';
 	str[i] = '\0';
@@ -97,6 +144,7 @@ void init(char *str, int l)
  * main - multiply two numbers
  * @argc: number of arguments
  * @argv: argument vector
+ *
  * Return: zero, or exit status of 98 if failure
  */
 int main(int argc, char *argv[])
